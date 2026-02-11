@@ -70,7 +70,7 @@ const Login = ({ onLogin, onClose }) => {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
-        <p className="login-hint">Default: admin / admin123</p>
+        <p className="login-hint">Default: Ask HeadChef</p>
       </div>
     </div>
   );
