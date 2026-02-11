@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const API_URL = "/api";
+// Use environment variable for production, fallback to localhost for development
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+
+console.log("API URL:", API_URL); // For debugging
 
 const api = axios.create({
   baseURL: API_URL,
@@ -28,7 +31,6 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Token expired or invalid
       localStorage.removeItem("token");
       localStorage.removeItem("username");
     }
@@ -40,6 +42,8 @@ export const authAPI = {
   login: (username, password) =>
     api.post("/auth/login", { username, password }),
   verify: () => api.get("/auth/verify"),
+  changePassword: (currentPassword, newPassword) =>
+    api.post("/auth/change-password", { currentPassword, newPassword }),
 };
 
 export const recipeAPI = {
